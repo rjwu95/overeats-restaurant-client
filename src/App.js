@@ -38,7 +38,7 @@ class App extends Component {
         >
           쏴좡뉨 나가지 말아여
         </button>
-        <div style={{ fontSize: 40 }} className="orderlist">
+        <div style={{ fontSize: 40, padding: 10 }} className="orderlist">
           <hr />
           주문리스트
           {this.state.orderData.map((el, index) => (
@@ -53,7 +53,7 @@ class App extends Component {
             >
               <h4>주문번호: {el.order_id}</h4>
               <h4>주소: {el.address}</h4>
-              <h4>주문시간: {el.date}</h4>
+              <h4>주문시간: {el._date}</h4>
               <div>
                 주문내역:{' '}
                 {el.orderList.map((el, i) => (
@@ -83,18 +83,20 @@ class App extends Component {
               </p>
               <div>주문자전화번호: {el.phoneNumber}</div>
               <button
-                onClick={e => {
+                onClick={async e => {
                   let order_id = e.target.parentNode.childNodes[0].textContent.slice(
                     6
                   );
-                  axios.get(
-                    `http://ec2-34-201-173-255.compute-1.amazonaws.com:8080/restaurants/delivery/${order_id}`
+                  let restaurant_id = await localStorage.getItem(
+                    'restaurant_id'
                   );
-                  console.log(order_id);
+                  axios.get(
+                    `http://ec2-34-201-173-255.compute-1.amazonaws.com:8080/restaurants/delivery/${restaurant_id}/${order_id}`
+                  );
                   this.setState({
                     ...this.state,
                     orderData: this.state.orderData.filter(
-                      el => el.order_id !== Number(order_id)
+                      el => el.order_id !== order_id
                     )
                   });
                 }}
