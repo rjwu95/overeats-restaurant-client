@@ -53,7 +53,7 @@ class App extends Component {
             >
               <h4>주문번호: {el.order_id}</h4>
               <h4>주소: {el.address}</h4>
-              <h4>주문시간: {el._date}</h4>
+              <h4>주문시간: {el.date}</h4>
               <div>
                 주문내역:{' '}
                 {el.orderList.map((el, i) => (
