@@ -29,14 +29,17 @@ class App extends Component {
   render() {
     return this.state.isLogin ? (
       <div style={{ fontSize: 40 }}>
-        쏴좡뉨 풰이지
+        <span style={{ color: '#51CDCA' }}>
+          {localStorage.getItem('restaurantName')}
+        </span>
+        의 싸장님 페이지
         <button
           onClick={() => {
             localStorage.setItem('isLogin', false);
             this.setState({ isLogin: false });
           }}
         >
-          쏴좡뉨 나가지 말아여
+          로그아웃
         </button>
         <div style={{ fontSize: 40, padding: 10 }} className="orderlist">
           <hr />
@@ -141,6 +144,7 @@ class App extends Component {
               )
               .then(res => {
                 localStorage.setItem('restaurant_id', res.data.restaurantKey);
+                localStorage.setItem('restaurantName', res.data.restaurantName);
                 if (res.status === 200) {
                   localStorage.setItem('isLogin', true);
                   this.setState({ isLogin: true });
