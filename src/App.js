@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import SocketIOClient from 'socket.io-client';
-// import axios from 'axios';
 
 class App extends Component {
   state = {
@@ -143,6 +142,7 @@ class App extends Component {
                 { headers: { 'Content-Type': 'application/json' } }
               )
               .then(res => {
+                console.log(res);
                 localStorage.setItem('restaurant_id', res.data.restaurantKey);
                 localStorage.setItem('restaurantName', res.data.restaurantName);
                 if (res.status === 200) {
