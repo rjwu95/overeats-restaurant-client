@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import SocketIOClient from 'socket.io-client';
+import './style.css';
 
 class App extends Component {
   state = {
     email: '',
     password: '',
-    isLogin: localStorage.getItem('isLogin'),
+    isLogin: JSON.parse(localStorage.getItem('isLogin')),
     restaurantKey: localStorage.getItem('restaurant_id'),
     orderData: []
   };
@@ -28,22 +29,29 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state);
     return this.state.isLogin ? (
-      <div style={{ fontSize: 40 }}>
-        <span style={{ color: '#51CDCA' }}>
-          {localStorage.getItem('restaurantName')}
-        </span>
-        의 싸장님 페이지
+      <div
+        style={{
+          fontSize: '1em',
+          textAlign: 'center',
+          color: '#fff',
+          padding: '20px'
+        }}
+      >
+        <span>{localStorage.getItem('restaurantName')}</span>의 싸장님 페이지
         <button
+          style={{
+            fontSize: '0.8em'
+          }}
           onClick={() => {
             localStorage.setItem('isLogin', false);
+            localStorage.setItem('restaurantName', '');
             this.setState({ isLogin: false });
           }}
         >
           로그아웃
         </button>
-        <div style={{ fontSize: 40, padding: 10 }} className="orderlist">
+        <div style={{ fontSize: '1em', padding: '30px' }} className="orderlist">
           <hr />
           주문리스트
           {this.state.orderData.map((el, index) => (
@@ -51,9 +59,10 @@ class App extends Component {
               key={index}
               style={{
                 marginTop: 5,
-                fontSize: 20,
-                border: '2.5px solid #DCDCDC',
-                width: 400
+                boxShadow: '0px 0px 5px rgba(0,0,0,0.5)',
+                fontSize: '1em',
+                lineHeight: '1.6em',
+                padding: '10px 20px'
               }}
             >
               <h4>주문번호: {el.order_id}</h4>
@@ -115,10 +124,18 @@ class App extends Component {
         </div>
       </div>
     ) : (
-      <div>
-        <h1>식당아이디로 로그인 해주세요</h1>
+      <div
+        style={{
+          margin: '10px auto',
+          display: 'flex',
+          padding: '5%',
+          flexDirection: 'column',
+          textAlign: 'center',
+          width: '400px'
+        }}
+      >
+        <h2 style={{ color: '#ddd' }}>식당아이디로 로그인 해주세요</h2>
         <input
-          style={{ width: 350, height: 50 }}
           onChange={e =>
             this.setState({
               email: e.target.value
@@ -128,7 +145,6 @@ class App extends Component {
         />
         <input
           type="password"
-          style={{ width: 350, height: 50 }}
           onChange={e =>
             this.setState({
               password: e.target.value
@@ -137,7 +153,6 @@ class App extends Component {
           placeholder="password"
         />
         <button
-          style={{ height: 50 }}
           onClick={() => {
             axios
               .post(

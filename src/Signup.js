@@ -24,21 +24,19 @@ class Signup extends Component {
               email: e.target.value
             })
           }
-          style={{ width: '100%', height: 30, marginTop: 30 }}
+          style={{ height: 15 }}
           placeholder="email"
         />
-        이메일
         <input
           onChange={e =>
             this.setState({
               password: e.target.value
             })
           }
-          style={{ width: '100%', height: 30, marginTop: 30 }}
+          style={{ height: 15 }}
           placeholder="password"
           type="password"
         />
-        비밀번호
         <div>
           <input
             onChange={e => {
@@ -46,7 +44,7 @@ class Signup extends Component {
                 confirmPassword: e.target.value === this.state.password
               });
             }}
-            style={{ width: '100%', height: 30, marginTop: 30 }}
+            style={{ height: 15 }}
             onBlur={() => {
               this.setState({ visible: true });
             }}
@@ -55,18 +53,25 @@ class Signup extends Component {
           />
           {this.state.visible ? (
             this.state.confirmPassword ? (
-              <div style={{ color: 'green', textDecorationLine: 'underline' }}>
+              <div
+                style={{
+                  color: 'green',
+                  fontSize: '0.8em',
+                  textAlign: 'center'
+                }}
+              >
                 비밀번호가 일치합니다
               </div>
             ) : (
-              <div style={{ color: 'red', textDecorationLine: 'underline' }}>
+              <div
+                style={{ color: 'red', fontSize: '0.8em', textAlign: 'center' }}
+              >
                 비밀번호가 일치하지 않습니다
               </div>
             )
           ) : (
             <div />
           )}
-          비밀번호 확인
         </div>
         <input
           onChange={e =>
@@ -74,10 +79,9 @@ class Signup extends Component {
               name: e.target.value
             })
           }
-          style={{ width: '100%', height: 30, marginTop: 30 }}
+          style={{ height: 15 }}
           placeholder="name"
         />
-        이름
         <input
           onBlur={e =>
             this.setState({
@@ -89,11 +93,10 @@ class Signup extends Component {
               )
             })
           }
-          style={{ width: '100%', height: 30, marginTop: 30 }}
+          style={{ height: 15 }}
           // value={this.state.phoneNumber}
           placeholder="phoneNumber"
         />
-        <div>전화번호</div>
         <button
           onClick={() => {
             console.log(this.state);
@@ -104,7 +107,7 @@ class Signup extends Component {
             );
             alert('회원가입이 완료되었습니다.');
           }}
-          style={{ width: '50%', height: 30, marginTop: 30, marginLeft: '25%' }}
+          style={{ width: '50%', height: 40, marginTop: 30, marginLeft: '25%' }}
         >
           등록
         </button>
