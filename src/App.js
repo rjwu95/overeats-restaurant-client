@@ -6,26 +6,29 @@ class App extends Component {
   state = {
     email: '',
     password: '',
-    isLogin: JSON.parse(localStorage.getItem('isLogin')),
+    isLogin: localStorage.getItem('isLogin'),
+    restaurantKey: localStorage.getItem('restaurant_id'),
     orderData: []
   };
 
-  socket = SocketIOClient(
-    'http://ec2-34-201-173-255.compute-1.amazonaws.com:8080'
-  );
+  baseUrl = 'http://ec2-34-201-173-255.compute-1.amazonaws.com:8080';
+
+  socket = SocketIOClient(this.baseUrl);
 
   componentDidMount() {
+    console.log('didmount');
     this.socket.on(localStorage.getItem('restaurant_id'), order => {
       alert('새 주문이 왔어요!');
-      console.log(order);
       this.setState({
         ...this.state,
         orderData: [order, ...this.state.orderData]
       });
+      // console.log(this.state);
     });
   }
 
   render() {
+    console.log(this.state);
     return this.state.isLogin ? (
       <div style={{ fontSize: 40 }}>
         <span style={{ color: '#51CDCA' }}>
@@ -93,7 +96,8 @@ class App extends Component {
                     'restaurant_id'
                   );
                   axios.get(
-                    `http://ec2-34-201-173-255.compute-1.amazonaws.com:8080/restaurants/delivery/${restaurant_id}/${order_id}`
+                    this.baseUrl +
+                      `/restaurants/delivery/${restaurant_id}/${order_id}`
                   );
                   this.setState({
                     ...this.state,
@@ -137,17 +141,20 @@ class App extends Component {
           onClick={() => {
             axios
               .post(
-                'http://ec2-34-201-173-255.compute-1.amazonaws.com:8080/users/signin',
+                this.baseUrl + '/users/signin',
                 { email: this.state.email, password: this.state.password },
                 { headers: { 'Content-Type': 'application/json' } }
               )
               .then(res => {
                 console.log(res);
+                this.setState({ restaurantKey: res.data.restaurantKey });
                 localStorage.setItem('restaurant_id', res.data.restaurantKey);
                 localStorage.setItem('restaurantName', res.data.restaurantName);
                 if (res.status === 200) {
                   localStorage.setItem('isLogin', true);
                   this.setState({ isLogin: true });
+                } else {
+                  alert('아이디나 비밀번호를 확인해주세요.');
                 }
               });
           }}
