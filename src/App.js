@@ -11,9 +11,7 @@ class App extends Component {
     restaurantKey: localStorage.getItem('restaurant_id'),
     orderData: []
   };
-
   baseUrl = 'http://ec2-34-201-173-255.compute-1.amazonaws.com:8080';
-
   socket = SocketIOClient(this.baseUrl);
 
   componentDidMount() {
@@ -28,43 +26,66 @@ class App extends Component {
     });
   }
 
+  isLogin = () => {
+    localStorage.setItem('isLogin', false);
+    localStorage.setItem('restaurantName', '');
+    localStorage.setItem('restaurant_id', '');
+    this.socket.disconnect('disconnect', () => console.log('끊김..'));
+    this.setState({ isLogin: false });
+  };
+
+  signin = async () => {
+    let { email, password } = this.state;
+    let baseUrl = this.baseUrl;
+    await axios
+      .post(
+        baseUrl + '/users/signin',
+        { email, password },
+        { headers: { 'Content-Type': 'application/json' } }
+      )
+      .then(res => {
+        console.log(res);
+        this.setState({ restaurantKey: res.data.restaurantKey });
+        localStorage.setItem('restaurant_id', res.data.restaurantKey);
+        localStorage.setItem('restaurantName', res.data.restaurantName);
+        if (res.status === 200) {
+          localStorage.setItem('isLogin', true);
+          this.setState({ isLogin: true });
+          window.location.href = '/';
+        } else {
+          alert('아이디나 비밀번호를 확인해주세요.');
+        }
+      });
+  };
+
+  targetValue = (e, name) => {
+    this.setState({
+      [name]: e.target.value
+    });
+  };
+  order = async e => {
+    {
+      let order_id = e.target.parentNode.childNodes[0].textContent.slice(6);
+      let restaurant_id = await localStorage.getItem('restaurant_id');
+      axios.get(
+        this.baseUrl + `/restaurants/delivery/${restaurant_id}/${order_id}`
+      );
+      this.setState({
+        ...this.state,
+        orderData: this.state.orderData.filter(el => el.order_id !== order_id)
+      });
+    }
+  };
   render() {
     return this.state.isLogin ? (
-      <div
-        style={{
-          fontSize: '1em',
-          textAlign: 'center',
-          color: '#fff',
-          padding: '20px'
-        }}
-      >
+      <div className="login">
         <span>{localStorage.getItem('restaurantName')}</span>의 싸장님 페이지
-        <button
-          style={{
-            fontSize: '0.8em'
-          }}
-          onClick={() => {
-            localStorage.setItem('isLogin', false);
-            localStorage.setItem('restaurantName', '');
-            this.setState({ isLogin: false });
-          }}
-        >
-          로그아웃
-        </button>
+        <button onClick={this.isLogin}>로그아웃</button>
         <div style={{ fontSize: '1em', padding: '30px' }} className="orderlist">
           <hr />
-          주문리스트
+          <h4>주문리스트</h4>
           {this.state.orderData.map((el, index) => (
-            <div
-              key={index}
-              style={{
-                marginTop: 5,
-                boxShadow: '0px 0px 5px rgba(0,0,0,0.5)',
-                fontSize: '1em',
-                lineHeight: '1.6em',
-                padding: '10px 20px'
-              }}
-            >
+            <div key={index} className="orderList">
               <h4>주문번호: {el.order_id}</h4>
               <h4>주소: {el.address}</h4>
               <h4>주문시간: {el.date}</h4>
@@ -73,7 +94,7 @@ class App extends Component {
                 {el.orderList.map((el, i) => (
                   <div key={i}>
                     <span>{el.menu}</span>
-                    <span style={{ marginLeft: 15 }}> {el.number}</span>
+                    <span style={{ marginLeft: 15 }}> {el.number}개</span>
                     <span style={{ marginLeft: 15 }}> {el.price}</span>
                   </div>
                 ))}
@@ -97,24 +118,7 @@ class App extends Component {
               </p>
               <div>주문자전화번호: {el.phoneNumber}</div>
               <button
-                onClick={async e => {
-                  let order_id = e.target.parentNode.childNodes[0].textContent.slice(
-                    6
-                  );
-                  let restaurant_id = await localStorage.getItem(
-                    'restaurant_id'
-                  );
-                  axios.get(
-                    this.baseUrl +
-                      `/restaurants/delivery/${restaurant_id}/${order_id}`
-                  );
-                  this.setState({
-                    ...this.state,
-                    orderData: this.state.orderData.filter(
-                      el => el.order_id !== order_id
-                    )
-                  });
-                }}
+                onClick={this.order}
                 // 아직 주문번호로 지우는 거 확인 못했음. 내일 꼭 확인하기 받아오는 데이터도 한번더 확인
               >
                 배달완료
@@ -124,58 +128,17 @@ class App extends Component {
         </div>
       </div>
     ) : (
-      <div
-        style={{
-          margin: '10px auto',
-          display: 'flex',
-          padding: '5%',
-          flexDirection: 'column',
-          textAlign: 'center',
-          width: '400px'
-        }}
-      >
+      <div className="logout">
         <h2 style={{ color: '#ddd' }}>식당아이디로 로그인 해주세요</h2>
-        <input
-          onChange={e =>
-            this.setState({
-              email: e.target.value
-            })
-          }
-          placeholder="email"
-        />
-        <input
-          type="password"
-          onChange={e =>
-            this.setState({
-              password: e.target.value
-            })
-          }
-          placeholder="password"
-        />
-        <button
-          onClick={() => {
-            axios
-              .post(
-                this.baseUrl + '/users/signin',
-                { email: this.state.email, password: this.state.password },
-                { headers: { 'Content-Type': 'application/json' } }
-              )
-              .then(res => {
-                console.log(res);
-                this.setState({ restaurantKey: res.data.restaurantKey });
-                localStorage.setItem('restaurant_id', res.data.restaurantKey);
-                localStorage.setItem('restaurantName', res.data.restaurantName);
-                if (res.status === 200) {
-                  localStorage.setItem('isLogin', true);
-                  this.setState({ isLogin: true });
-                } else {
-                  alert('아이디나 비밀번호를 확인해주세요.');
-                }
-              });
-          }}
-        >
-          로그인
-        </button>
+        {['email', 'password'].map(el => (
+          <input
+            type={el === 'password' ? el : 'text'}
+            onChange={e => this.targetValue(e, el)}
+            placeholder={el}
+            key={el}
+          />
+        ))}
+        <button onClick={this.signin}>로그인</button>
       </div>
     );
   }
