@@ -36,6 +36,8 @@ class App extends Component {
 
   signin = async () => {
     let { email, password } = this.state;
+    if (email === '' || password === '')
+      return alert('아이디와 비밀번호를 적어주세요!');
     let baseUrl = this.baseUrl;
     await axios
       .post(

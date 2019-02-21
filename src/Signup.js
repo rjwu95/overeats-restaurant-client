@@ -106,7 +106,21 @@ class Signup extends Component {
           />
           <button
             onClick={() => {
-              console.log(this.state);
+              let {
+                email,
+                password,
+                confirmPassword,
+                name,
+                phoneNumber
+              } = this.state;
+              if (
+                (email === '',
+                password === '',
+                confirmPassword === '',
+                name === '',
+                phoneNumber === '')
+              )
+                return alert('양식에 맞게 작성해주세요!');
               axios
                 .post(
                   'http://ec2-34-201-173-255.compute-1.amazonaws.com:8080/users/signup',
