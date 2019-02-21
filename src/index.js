@@ -6,13 +6,34 @@ import Signup from './Signup';
 const routing = (
   <Router>
     <div>
-      <Link to="/">Home</Link>
-      <Link
-        to="/signup"
-        style={{ marginLeft: 20, borderColor: 'black', borderWidth: 0.5 }}
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row-reverse',
+          padding: '5px',
+          boxShadow: '0px 2px 5px #111'
+        }}
       >
-        signup
-      </Link>
+        <Link
+          to="/"
+          style={{ padding: '10px', color: '#51cdca', textDecoration: 'none' }}
+        >
+          Home
+        </Link>
+        <Link
+          to="/signup"
+          style={{
+            marginLeft: 20,
+            borderColor: 'black',
+            borderWidth: 0.5,
+            padding: '10px',
+            color: '#51cdca',
+            textDecoration: 'none'
+          }}
+        >
+          signup
+        </Link>
+      </div>
       <Route exact path="/" component={App} />
       <Route exact path="/signup" component={Signup} />
     </div>
