@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import SocketIOClient from 'socket.io-client';
+import { socket } from './socketIoClient';
 import './style.css';
 
 class App extends Component {
@@ -12,11 +12,10 @@ class App extends Component {
     orderData: []
   };
   baseUrl = 'http://ec2-34-201-173-255.compute-1.amazonaws.com:8080';
-  socket = SocketIOClient(this.baseUrl);
 
   componentDidMount() {
     console.log('didmount');
-    this.socket.on(localStorage.getItem('restaurant_id'), order => {
+    socket.on(localStorage.getItem('restaurant_id'), order => {
       alert('새 주문이 왔어요!');
       this.setState({
         ...this.state,
@@ -26,11 +25,9 @@ class App extends Component {
     });
   }
 
-  isLogin = () => {
+  logout = () => {
     localStorage.setItem('isLogin', false);
-    localStorage.setItem('restaurantName', '');
-    localStorage.setItem('restaurant_id', '');
-    this.socket.disconnect('disconnect', () => console.log('끊김..'));
+    socket.disconnect('disconnect', () => console.log('끊김..'));
     this.setState({ isLogin: false });
   };
 
@@ -50,15 +47,27 @@ class App extends Component {
         this.setState({ restaurantKey: res.data.restaurantKey });
         localStorage.setItem('restaurant_id', res.data.restaurantKey);
         localStorage.setItem('restaurantName', res.data.restaurantName);
-        if (res.status === 200) {
-          localStorage.setItem('isLogin', true);
-          this.setState({ isLogin: true });
-          window.location.href = '/';
-        } else {
-          alert('아이디나 비밀번호를 확인해주세요.');
-        }
-      });
+        localStorage.setItem('isLogin', true);
+        this.setState({ isLogin: true });
+        window.location.href = '/';
+      })
+      .catch(err => alert('아이디나 비밀번호를 확인해주세요'));
   };
+
+  _totalPrice = element =>
+    element.orderList.reduce(
+      (acc, curr) =>
+        acc +
+        Number(
+          curr.price
+            .slice(0, curr.price.length - 1)
+            .split('')
+            .filter(el => el !== ',')
+            .join('')
+        ) *
+          curr.number,
+      0
+    );
 
   targetValue = (e, name) => {
     this.setState({
@@ -82,7 +91,7 @@ class App extends Component {
     return this.state.isLogin ? (
       <div className="login">
         <span>{localStorage.getItem('restaurantName')}</span>의 싸장님 페이지
-        <button onClick={this.isLogin}>로그아웃</button>
+        <button onClick={this.logout}>로그아웃</button>
         <div style={{ fontSize: '1em', padding: '30px' }} className="orderlist">
           <hr />
           <h4>주문리스트</h4>
@@ -103,20 +112,7 @@ class App extends Component {
               </div>
               <p>
                 총 금액:
-                {el.orderList.reduce(
-                  (acc, curr) =>
-                    acc +
-                    Number(
-                      curr.price
-                        .slice(0, curr.price.length - 1)
-                        .split('')
-                        .filter(el => el !== ',')
-                        .join('')
-                    ) *
-                      curr.number,
-                  0
-                )}
-                원
+                {this._totalPrice(el)}원
               </p>
               <div>주문자전화번호: {el.phoneNumber}</div>
               <button
