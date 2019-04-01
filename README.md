@@ -1,3 +1,3 @@
 # restaurant-client
 
-<img src="https://media.giphy.com/media/2uw3swRHTXYBkq06YM/giphy.gif" />
+<img src="https://media.giphy.com/media/2uw3swRHTXYBkq06YM/giphy.gif" width="100%" />
