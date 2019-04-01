@@ -11,7 +11,7 @@ class App extends Component {
     restaurantKey: localStorage.getItem('restaurant_id'),
     orderData: []
   };
-  baseUrl = 'http://ec2-34-201-173-255.compute-1.amazonaws.com:8080';
+  baseUrl = 'http://54.180.102.251:8080';
 
   componentDidMount() {
     console.log('didmount');

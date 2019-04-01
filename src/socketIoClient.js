@@ -1,5 +1,3 @@
 import socketIoClient from 'socket.io-client';
 
-export const socket = socketIoClient(
-  'http://ec2-34-201-173-255.compute-1.amazonaws.com:8080'
-);
+export const socket = socketIoClient('http://54.180.102.251:8080');

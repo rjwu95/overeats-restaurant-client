@@ -10,7 +10,7 @@ class Signup extends Component {
     phoneNumber: '',
     confirmPassword: false,
     visible: false,
-    register: false
+    register: false,
   };
   render() {
     if (!this.state.register) {
@@ -18,13 +18,13 @@ class Signup extends Component {
         <div
           style={{
             width: '50%',
-            marginLeft: '25%'
+            marginLeft: '25%',
           }}
         >
           <input
             onChange={e =>
               this.setState({
-                email: e.target.value
+                email: e.target.value,
               })
             }
             style={{ height: 15 }}
@@ -33,7 +33,7 @@ class Signup extends Component {
           <input
             onChange={e =>
               this.setState({
-                password: e.target.value
+                password: e.target.value,
               })
             }
             style={{ height: 15 }}
@@ -44,7 +44,7 @@ class Signup extends Component {
             <input
               onChange={e => {
                 this.setState({
-                  confirmPassword: e.target.value === this.state.password
+                  confirmPassword: e.target.value === this.state.password,
                 });
               }}
               style={{ height: 15 }}
@@ -60,7 +60,7 @@ class Signup extends Component {
                   style={{
                     color: 'green',
                     fontSize: '0.8em',
-                    textAlign: 'center'
+                    textAlign: 'center',
                   }}
                 >
                   비밀번호가 일치합니다
@@ -70,7 +70,7 @@ class Signup extends Component {
                   style={{
                     color: 'red',
                     fontSize: '0.8em',
-                    textAlign: 'center'
+                    textAlign: 'center',
                   }}
                 >
                   비밀번호가 일치하지 않습니다
@@ -83,7 +83,7 @@ class Signup extends Component {
           <input
             onChange={e =>
               this.setState({
-                name: e.target.value
+                name: e.target.value,
               })
             }
             style={{ height: 15 }}
@@ -96,8 +96,8 @@ class Signup extends Component {
                   e.target.value
                     .split('')
                     .filter(el => !isNaN(Number(el)))
-                    .join('')
-                )
+                    .join(''),
+                ),
               })
             }
             style={{ height: 15 }}
@@ -111,7 +111,7 @@ class Signup extends Component {
                 password,
                 confirmPassword,
                 name,
-                phoneNumber
+                phoneNumber,
               } = this.state;
               if (
                 (email === '',
@@ -122,15 +122,13 @@ class Signup extends Component {
               )
                 return alert('양식에 맞게 작성해주세요!');
               axios
-                .post(
-                  'http://ec2-34-201-173-255.compute-1.amazonaws.com:8080/users/signup',
-                  this.state,
-                  { headers: { 'Content-Type': 'application/json' } }
-                )
+                .post('http://54.180.102.251:8080/users/signup', this.state, {
+                  headers: { 'Content-Type': 'application/json' },
+                })
                 .then(res => {
                   alert('안녕하세요!');
                   this.setState({
-                    register: true
+                    register: true,
                   });
                 })
                 .catch(function(err) {
@@ -146,7 +144,7 @@ class Signup extends Component {
               width: '50%',
               height: 40,
               marginTop: 30,
-              marginLeft: '25%'
+              marginLeft: '25%',
             }}
           >
             등록
