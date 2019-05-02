@@ -11,31 +11,35 @@ const routing = (
           display: 'flex',
           flexDirection: 'row-reverse',
           padding: '5px',
-          boxShadow: '0px 2px 5px #111'
+          boxShadow: '0px 2px 5px #111',
         }}
       >
         <Link
-          to="/"
+          to="/overeats-restaurant-client"
           style={{ padding: '10px', color: '#51cdca', textDecoration: 'none' }}
         >
           Home
         </Link>
         <Link
-          to="/signup"
+          to="/overeats-restaurant-client/signup"
           style={{
             marginLeft: 20,
             borderColor: 'black',
             borderWidth: 0.5,
             padding: '10px',
             color: '#51cdca',
-            textDecoration: 'none'
+            textDecoration: 'none',
           }}
         >
           signup
         </Link>
       </div>
-      <Route exact path="/" component={App} />
-      <Route exact path="/signup" component={Signup} />
+      <Route exact path="/overeats-restaurant-client" component={App} />
+      <Route
+        exact
+        path="/overeats-restaurant-client/signup"
+        component={Signup}
+      />
     </div>
   </Router>
 );
