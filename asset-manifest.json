@@ -1,13 +1,13 @@
 {
-  "main.css": "/restaurant/static/css/main.a8e3f4c6.chunk.css",
-  "main.js": "/restaurant/static/js/main.2b1d8d34.chunk.js",
-  "main.js.map": "/restaurant/static/js/main.2b1d8d34.chunk.js.map",
-  "runtime~main.js": "/restaurant/static/js/runtime~main.aeab21f4.js",
-  "runtime~main.js.map": "/restaurant/static/js/runtime~main.aeab21f4.js.map",
-  "static/js/2.b843a20b.chunk.js": "/restaurant/static/js/2.b843a20b.chunk.js",
-  "static/js/2.b843a20b.chunk.js.map": "/restaurant/static/js/2.b843a20b.chunk.js.map",
-  "index.html": "/restaurant/index.html",
-  "precache-manifest.4d6254fe18a342581cb98f443f6e86a6.js": "/restaurant/precache-manifest.4d6254fe18a342581cb98f443f6e86a6.js",
-  "service-worker.js": "/restaurant/service-worker.js",
-  "static/css/main.a8e3f4c6.chunk.css.map": "/restaurant/static/css/main.a8e3f4c6.chunk.css.map"
+  "main.css": "/overeats-restaurant-client/static/css/main.a8e3f4c6.chunk.css",
+  "main.js": "/overeats-restaurant-client/static/js/main.2b1d8d34.chunk.js",
+  "main.js.map": "/overeats-restaurant-client/static/js/main.2b1d8d34.chunk.js.map",
+  "runtime~main.js": "/overeats-restaurant-client/static/js/runtime~main.b32f5669.js",
+  "runtime~main.js.map": "/overeats-restaurant-client/static/js/runtime~main.b32f5669.js.map",
+  "static/js/2.f07f79af.chunk.js": "/overeats-restaurant-client/static/js/2.f07f79af.chunk.js",
+  "static/js/2.f07f79af.chunk.js.map": "/overeats-restaurant-client/static/js/2.f07f79af.chunk.js.map",
+  "index.html": "/overeats-restaurant-client/index.html",
+  "precache-manifest.26317a82edad8577e8e9e31f8cdd46b6.js": "/overeats-restaurant-client/precache-manifest.26317a82edad8577e8e9e31f8cdd46b6.js",
+  "service-worker.js": "/overeats-restaurant-client/service-worker.js",
+  "static/css/main.a8e3f4c6.chunk.css.map": "/overeats-restaurant-client/static/css/main.a8e3f4c6.chunk.css.map"
 }
