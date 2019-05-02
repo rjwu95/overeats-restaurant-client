@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/overeats-restaurant-client/precache-manifest.26317a82edad8577e8e9e31f8cdd46b6.js"
+  "/overeats-restaurant-client/precache-manifest.c973906d09f830ab6107fa24ccca35b4.js"
 );
 
 workbox.clientsClaim();

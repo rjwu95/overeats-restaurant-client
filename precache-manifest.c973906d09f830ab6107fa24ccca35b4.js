@@ -4,19 +4,19 @@ self.__precacheManifest = [
     "url": "/overeats-restaurant-client/static/js/runtime~main.b32f5669.js"
   },
   {
-    "revision": "2b1d8d34acc08e1df375",
-    "url": "/overeats-restaurant-client/static/js/main.2b1d8d34.chunk.js"
+    "revision": "72a995e7a8c2cbfe38d5",
+    "url": "/overeats-restaurant-client/static/js/main.72a995e7.chunk.js"
   },
   {
     "revision": "f07f79af736d52afa0e4",
     "url": "/overeats-restaurant-client/static/js/2.f07f79af.chunk.js"
   },
   {
-    "revision": "2b1d8d34acc08e1df375",
+    "revision": "72a995e7a8c2cbfe38d5",
     "url": "/overeats-restaurant-client/static/css/main.a8e3f4c6.chunk.css"
   },
   {
-    "revision": "43c1b42b5fb8da0428a79ee4aa8ee3b9",
+    "revision": "11f0225cb381aaeea9e6011110d6ea3d",
     "url": "/overeats-restaurant-client/index.html"
   }
 ];
